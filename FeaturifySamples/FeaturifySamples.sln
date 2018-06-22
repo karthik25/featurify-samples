@@ -9,7 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "basic", "basic", "{4FCDA4CE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity-framework", "identity-framework", "{B8EF9467-7921-4DDE-847F-4D5ACB6C149C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetIdentityWithFeaturify", "identity-framework\AspNetIdentityWithFeaturify\AspNetIdentityWithFeaturify.csproj", "{3EC08B2B-C10F-4E4E-956D-B1EBBBAE6EA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetIdentityWithFeaturify", "identity-framework\AspNetIdentityWithFeaturify\AspNetIdentityWithFeaturify.csproj", "{3EC08B2B-C10F-4E4E-956D-B1EBBBAE6EA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70530EF7-9C74-4231-B7C3-AB2145E70AB8}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		ReadMe.md = ReadMe.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
