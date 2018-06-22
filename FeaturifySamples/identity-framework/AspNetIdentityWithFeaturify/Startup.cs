@@ -1,9 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Featurify;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AspNetIdentityWithFeaturify.Data;
+using AspNetIdentityWithFeaturify.Models;
+using AspNetIdentityWithFeaturify.Services;
+using Microsoft.AspNetCore.Http;
+using AspNetIdentityWithFeaturify.Infrastructure;
 
-namespace FeaturifySamples
+namespace AspNetIdentityWithFeaturify
 {
     public class Startup
     {
@@ -17,6 +25,24 @@ namespace FeaturifySamples
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddFeaturify<UserBasedToggleMetadataFinder, IdentityUserInfoStrategy>(options =>
+            {
+                options.AnyUserVerifier = "*";
+                options.UseStrict = false;
+            });
+
             services.AddMvc();
         }
 
@@ -27,6 +53,7 @@ namespace FeaturifySamples
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -34,6 +61,8 @@ namespace FeaturifySamples
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
